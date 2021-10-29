@@ -2,7 +2,6 @@ from Setup import config
 import mysql.connector as connector
 
 def main():
-  print("Hello World!")
   conn = connector.connect(
     user = config.username,
     password = config.password,
@@ -12,7 +11,7 @@ def main():
 
   cur.execute("SELECT * FROM author")
   row = cur.fetchone()
-  print(row[1])
+  print(row)
 
 
 
