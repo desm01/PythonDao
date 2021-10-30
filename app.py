@@ -5,7 +5,7 @@ from flask import Flask
 app = Flask(__name__)
 mysql = MySQL(user=config.username, password=config.password, db=config.db)
 mysql.init_app(app)
-
+ 
 @app.route("/")
 def index():
   cur = mysql.get_db().cursor()
@@ -13,11 +13,4 @@ def index():
   res = cur.fetchone()
   cur.close()
   print(res)
-  return ("<p>Hello World " + res[1] + " </p>")
-
- 
-if __name__ == "__main__":
-   app.run(debug=True)
-
-
-
+  return ("<p>Hello World! " + res[1] + " </p>")
