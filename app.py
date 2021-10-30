@@ -1,21 +1,23 @@
 from Setup import config
-import mysql.connector as connector
+from flaskext.mysql import MySQL
+from flask import Flask
 
-def main():
-  conn = connector.connect(
-    user = config.username,
-    password = config.password,
-    database = config.db)
+app = Flask(__name__)
+mysql = MySQL(user=config.username, password=config.password, db=config.db)
+mysql.init_app(app)
 
-  cur = conn.cursor()
-
+@app.route("/")
+def index():
+  cur = mysql.get_db().cursor()
   cur.execute("SELECT * FROM author")
-  row = cur.fetchone()
-  print(row)
+  res = cur.fetchone()
+  cur.close()
+  print(res)
+  return ("<p>Hello World " + res[1] + " </p>")
 
-
-
-  
-
+ 
 if __name__ == "__main__":
-    main()
+   app.run(debug=True)
+
+
+
